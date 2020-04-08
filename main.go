@@ -8,14 +8,14 @@ import (
 )
 
 const (
-	size  = 256
-	brush = 16
+	size = 256
 )
 
 var (
 	bg, fg          uint32
 	out, surf       *sdl.Surface
 	sand, sbuf, vis [][]bool
+	brush           int32 = 8
 )
 
 func main() {
@@ -69,6 +69,13 @@ func main() {
 			switch evt.(type) {
 			case *sdl.QuitEvent:
 				running = false
+				break
+			case *sdl.MouseWheelEvent:
+				brush += int32(evt.(*sdl.MouseWheelEvent).Y)
+				if brush <= 0 {
+					brush = 1
+				}
+
 				break
 			}
 		}
@@ -176,7 +183,7 @@ func update() {
 	}
 
 	// collapse towers
-	for x := 0; x < size; x++ { // TODO: incrementing x in order shifts everything to the left slightly. fix this
+	for x := size - 1; x >= 0; x-- {
 		for y := 0; y < size-1; y++ {
 			if sbuf[y][x] && sbuf[y+1][x] {
 
@@ -227,5 +234,5 @@ func update() {
 }
 
 func maxSlopeAt(x, y int) int {
-	return int(10*math.Sin(float64(x)*312.5121+float64(y)*5125613.123))%2 + 1
+	return int(10*math.Sqrt(10*math.Cos(float64(x)*153.123-float64(y)*15345.2333)+math.Sin(float64(x)*31223.5121+float64(y)*512563.123)))%2 + 1
 }
