@@ -1,4 +1,4 @@
-module github.com/zac-garby/snad
+module github.com/zac-garby/sand
 
 go 1.13
 
