@@ -144,7 +144,7 @@ func update() {
 				continue
 			}
 
-			for y2 := y; sand[y2][x]; y2-- {
+			for y2 := y; y2 >= 0 && sand[y2][x]; y2-- {
 				vis[y2][x] = true
 
 				if y == size-1 || sand[y+1][x] {
