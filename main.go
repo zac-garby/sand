@@ -145,7 +145,7 @@ func update() {
 			}
 
 			// emulate different speeds - sometimes, don't move by gravity
-			if rand.Float64() < 0.2 {
+			if rand.Float64() < 0.4 {
 				vis[y][x] = true
 				sbuf[y][x] = true
 				continue
@@ -172,10 +172,10 @@ func update() {
 			}
 
 			r := rand.Float64()
-			if r < 0.1 && x > 0 && !sbuf[y][x-1] {
+			if r < 0.2 && x > 0 && !sbuf[y][x-1] {
 				sbuf[y][x-1] = true
 				sbuf[y][x] = false
-			} else if r >= 0.9 && x < size-1 && !sbuf[y][x+1] {
+			} else if r >= 0.8 && x < size-1 && !sbuf[y][x+1] {
 				sbuf[y][x+1] = true
 				sbuf[y][x] = false
 			}
