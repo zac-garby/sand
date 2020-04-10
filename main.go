@@ -190,7 +190,7 @@ func update() {
 	// slight pressure variations in air
 	for x := 0; x < size; x++ {
 		for y := 0; y < size-1; y++ {
-			if !sbuf[y][x] || sbuf[y+1][x] {
+			if !sbuf[y][x] || sbuf[y+1][x] || (x > 0 && sbuf[y][x-1]) || (x+1 < size && sbuf[y][x+1]) {
 				continue
 			}
 
