@@ -15,6 +15,7 @@ var (
 	bg, fg          uint32
 	out, surf       *sdl.Surface
 	sand, sbuf, vis [][]bool
+	ord             []int
 	brush           int32 = 8
 )
 
@@ -47,10 +48,22 @@ func main() {
 	sand = make([][]bool, size)
 	sbuf = make([][]bool, size)
 	vis = make([][]bool, size)
+	ord = make([]int, size)
+
+	for i := 0; i < size; i++ {
+		ord[i] = -1
+	}
+
 	for i := 0; i < size; i++ {
 		sand[i] = make([]bool, size)
 		sbuf[i] = make([]bool, size)
 		vis[i] = make([]bool, size)
+
+		var j int
+		for j = rand.Intn(size); has(ord, j); j = rand.Intn(size) {
+		}
+
+		ord[i] = j
 	}
 
 	for y := 10; y < 90; y++ {
@@ -103,6 +116,16 @@ func main() {
 		out.BlitScaled(nil, surf, nil)
 		win.UpdateSurface()
 	}
+}
+
+func has(xs []int, n int) bool {
+	for i := 0; i < len(xs); i++ {
+		if xs[i] == n {
+			return true
+		}
+	}
+
+	return false
 }
 
 func setPixel(s *sdl.Surface, x, y int, colour uint32) {
@@ -183,7 +206,9 @@ func update() {
 	}
 
 	// collapse towers
-	for x := size - 1; x >= 0; x-- {
+	for xx := 0; xx < size; xx++ {
+		x := ord[xx]
+
 		for y := 0; y < size-1; y++ {
 			if sbuf[y][x] && sbuf[y+1][x] {
 
